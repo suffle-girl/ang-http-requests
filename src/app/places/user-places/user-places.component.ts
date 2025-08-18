@@ -2,7 +2,6 @@ import { Component, DestroyRef, inject, signal } from "@angular/core";
 import { PlacesContainerComponent } from "../places-container/places-container.component";
 import { PlacesComponent } from "../places.component";
 import { PlacesService } from "../places.service";
-import { Place } from "../place.model";
 
 @Component({
   selector: "app-user-places",
@@ -16,7 +15,7 @@ export class UserPlacesComponent {
   error = signal("");
   private destroyRef = inject(DestroyRef);
   private placesService = inject(PlacesService);
-  places = this.placesService.loadedUserPlaces();
+  places = this.placesService.loadedUserPlaces;
 
   ngOnInit() {
     this.isFetching.set(true);
