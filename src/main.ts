@@ -33,5 +33,9 @@ function loggingInterceptor(
 }
 
 bootstrapApplication(AppComponent, {
-  providers: [provideHttpClient(withInterceptors([loggingInterceptor]))],
+  providers: [provideHttpClient()],
 }).catch((err) => console.error(err));
+
+// bootstrapApplication(AppComponent, {
+//   providers: [provideHttpClient(withInterceptors([loggingInterceptor]))],
+// }).catch((err) => console.error(err));
