@@ -3,6 +3,7 @@ import { PlacesContainerComponent } from "../places-container/places-container.c
 import { PlacesComponent } from "../places.component";
 import { PlacesService } from "../places.service";
 import { Place } from "../place.model";
+import { UserService } from "./user.service";
 
 @Component({
   selector: "app-user-places",
@@ -12,6 +13,10 @@ import { Place } from "../place.model";
   imports: [PlacesContainerComponent, PlacesComponent],
 })
 export class UserPlacesComponent {
+  user!: { name: string };
+  isLoggedIn = true;
+  constructor(private userService: UserService) {}
+
   isFetching = signal(false);
   error = signal("");
   private destroyRef = inject(DestroyRef);
@@ -19,6 +24,8 @@ export class UserPlacesComponent {
   places = this.placesService.loadedUserPlaces;
 
   ngOnInit() {
+    this.user = this.userService.user;
+
     this.isFetching.set(true);
     const subscription = this.placesService.loadUserPlaces().subscribe({
       error: (error: Error) => {
