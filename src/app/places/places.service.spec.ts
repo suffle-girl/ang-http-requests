@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {
   provideHttpClient,
@@ -54,5 +54,18 @@ describe("Component: UserPlaces", () => {
       expect(service.removeUserPlace).toHaveBeenCalledWith(dummyPlace);
       // You could also assert component state updates if it has any
     });
+  }));
+
+  it("should fetch data successfully (async)", fakeAsync(() => {
+    const fixture = TestBed.createComponent(UserPlacesComponent);
+    const component = fixture.componentInstance;
+    const service = TestBed.inject(PlacesService);
+
+    const dummyPlace = { id: "1", title: "Test" } as any;
+    spyOn(service, "removeUserPlace").and.returnValue(of({}));
+
+    component.onRemovePlace(dummyPlace);
+    tick();
+    expect(service.removeUserPlace).toHaveBeenCalledWith(dummyPlace);
   }));
 });
